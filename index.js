@@ -1,51 +1,35 @@
-const http = require('http');
-const fs = require('fs');
-const path = require('path');
+const express = require('express');
 
-// const hostname = "localhost";
-const port = process.env.PORT || 3000;
+const app = express();
 
-const server = http.createServer((req, res) => {
-
-    console.log('request for ' + req.url + 'by method ' + req.method);
-
-    if (req.method == 'GET') {
-        var fileURL;
-        if (req.url == '/') {
-            fileURL = "/index.html";
-        } else { fileURL = req.url }
-
-        var filePath = path.resolve('./public' + fileURL);
-
-        const fileExt = path.extname(filePath);
-
-        if (fileExt == '.html') {
-            fs.exists(filePath, (exists) => {
-                if (!exists) {
-                    res.statusCode = 404;
-                    res.setHeader('Content-type', 'text/html');
-                    res.end('<html> <body> <h1> error 404:'+ fileURL+ ' does not exists </h1></body></html>');
-                }
-                else{
-                    res.statusCode = 200;
-                    res.setHeader('Content-type', 'text/html');
-                    fs.createReadStream(filePath).pipe(res);
-                }
-            });
-        } else {
-            res.statusCode = 404;
-            res.setHeader('Content-type', 'text/html');
-            res.end('<html> <body> <h1> error 404:'+ fileURL+ ' not a HTNL file </h1></body></html>');
-        }
-
-    } else {
-        res.statusCode = 404;
-        res.setHeader('Content-type', 'text/html');
-        res.end('<html> <body> <h1> error 404:'+ fileURL+ ' not supported </h1></body></html>');
-    }
-
+app.get("/", function (req, res) {
+    res.sendFile(__dirname+"/public/index.html");
 });
 
-server.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}/`);
+app.get("/styleSheet.css", function (req, res) {
+    res.sendFile(__dirname+"/public/styleSheet.css");
+});
+
+app.get("/animation.css", function (req, res) {
+    res.sendFile(__dirname+"/public/animation.css");
+});
+
+app.get("/bubble.png", function (req, res) {
+    res.sendFile(__dirname+"/public/bubble.png");
+});
+
+app.get("/background.jpeg", function (req, res) {
+    res.sendFile(__dirname+"/public/background.jpeg");
+});
+
+app.get("/about", function (req, res) {
+    res.send("Now your are at about page");
+});
+
+app.get("/contact", function (req, res) {
+    res.send("Now you are at contact page");
+});
+
+app.listen(3000, function (req, res) {
+    console.log("Server is running at port : 3000");
 });

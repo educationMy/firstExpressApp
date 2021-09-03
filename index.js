@@ -23,7 +23,7 @@ app.get("/background.jpeg", function (req, res) {
     res.sendFile(__dirname+"/public/background.jpeg");
 });
 
-app.get("/about", function (req, res) {
+app.get("/ask", function (req, res) {
     res.send("Now your are at about page");
 });
 

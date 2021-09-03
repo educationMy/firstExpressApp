@@ -1,6 +1,7 @@
 const express = require('express');
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.get("/", function (req, res) {
     res.sendFile(__dirname+"/public/index.html");
@@ -30,6 +31,6 @@ app.get("/contact", function (req, res) {
     res.send("Now you are at contact page");
 });
 
-app.listen(3000, function (req, res) {
-    console.log("Server is running at port : 3000");
+app.listen(port, function (req, res) {
+    console.log(`Server running on http://localhost:${port}/`);
 });
